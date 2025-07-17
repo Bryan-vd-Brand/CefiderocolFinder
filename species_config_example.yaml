@@ -1,0 +1,9 @@
+#config file containing groups of bacterial species and their fastqs
+Pseudomonas_aeruginosa:
+  identifier_x:  /path/to/your/data/identifier_x.fastq
+Klebsiella_pneumoniae:
+  identifier_y:  /path/to/your/data/identifier_y.fastq
+Escherichia_coli:
+  identifier_z:  /path/to/your/data/identifier_z.fastq
+Acinetobacter_baumannii:
+  identifier_a:  /path/to/your/data/identifier_a.fastq

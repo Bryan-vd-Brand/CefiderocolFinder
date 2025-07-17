@@ -1,0 +1,39 @@
+Species	Gene	Adaptation	Nomenclature
+Acinetobacter_baumannii	piuA	frameshift_variant	Truncation of Siderophone receptor gene
+Acinetobacter_baumannii	pirA	frameshift_variant	Truncation of Siderophone receptor gene
+Acinetobacter_baumannii	carO	frameshift_variant	Truncation of outer membrane porin
+Acinetobacter_baumannii	feoA	frameshift_variant	Truncation of a small cytosolic protein
+Acinetobacter_baumannii	feoB	frameshift_variant	Truncation of a large protein involved in active translocation of Fe(II) 
+Acinetobacter_baumannii	feoC	frameshift_variant	Truncation of a small cytosolic protein likely acting as transcriptional repressor
+Acinetobacter_baumannii	piuD	frameshift_variant	Truncation
+Escherichia_coli	ftsI	conservative_inframe_insertion	Insertion of TyrArgIleAsn in the active pocket of PBP3
+Escherichia_coli	cirA	frameshift_variant	Truncation of Outer membrane receptor
+Escherichia_coli	fiu	frameshift_variant	Truncation of Iron catecholate outer membrane transporter
+Escherichia_coli	ompC	frameshift_variant	Truncation of General outer membrane porin
+Escherichia_coli	ompF	frameshift_variant	Truncation of General outer membrane porin
+Klebsiella_pneumoniae	cirA	frameshift_variant	Truncation of Outer membrane receptor
+Klebsiella_pneumoniae	KPHS_36570	frameshift_variant	Truncation of Outer membrane receptor (alternative name of cirA)
+Klebsiella_pneumoniae	fiu	frameshift_variant	Truncation of siderophore receptor fiu
+Klebsiella_pneumoniae	KPHS_21500	frameshift_variant	Truncation of siderophore receptor fiu (alternative name of fiu)
+Klebsiella_pneumoniae	acrR	frameshift_variant	Abscence of negative regulator of the acrAB-tolC efflux operon 
+Klebsiella_pneumoniae	KPHS_11900	frameshift_variant	Abscence of negative regulator of the acrAB-tolC efflux operon acrR (alternative name of acrR)
+Klebsiella_pneumoniae	fepA	frameshift_variant	Truncation of ferric enterobactin protein
+Klebsiella_pneumoniae	KPHS_14370	frameshift_variant	Truncation of ferric enterobactin protein (alternative name of fepA)
+Klebsiella_pneumoniae	fhuA	frameshift_variant	Truncation of Ferrichrome-iron outer membrame transporter/receptor
+Klebsiella_pneumoniae	KPHS_08990	frameshift_variant	Truncation of Ferrichrome-iron outer membrame transporter/receptor (alternative name of fhuA)
+Klebsiella_pneumoniae	ftsI	conservative_inframe_insertion	Insertion of TyrArgIleAsn in the active pocket of PBP3
+Klebsiella_pneumoniae	KPHS_08040	conservative_inframe_insertion	Insertion of TyrArgIleAsn in the active pocket of PBP3 (alternative name of ftsI)
+Pseudomonas_aeruginosa	piuD	frameshift_variant	Truncation
+Pseudomonas_aeruginosa	piuA	frameshift_variant	Truncation
+Pseudomonas_aeruginosa	piuB	frameshift_variant	Truncation
+Pseudomonas_aeruginosa	piuC	frameshift_variant	Truncation
+Pseudomonas_aeruginosa	pirA	frameshift_variant	Truncation
+Pseudomonas_aeruginosa	pirR	frameshift_variant	Truncation
+Pseudomonas_aeruginosa	oprD	frameshift_variant	Truncation
+Pseudomonas_aeruginosa	ampD	frameshift_variant	Abscence of negative regulator of ampC
+Pseudomonas_aeruginosa	ampC	missense_variant	Substitution L320P enlarging active pocket of ampC beta lactamase
+Pseudomonas_aeruginosa	fecI	frameshift_variant	Truncation of regulator of fecA
+Pseudomonas_aeruginosa	fecA	frameshift_variant	Truncation of outer-membrane ferric citrate receptor
+Pseudomonas_aeruginosa	mutS	frameshift_variant	Hypermutant variant
+Pseudomonas_aeruginosa	mutL	frameshift_variant	Hypermutant variant
+Pseudomonas_aeruginosa	mexR	frameshift_variant	Truncation of negative regulator of mexAB-oprM efflux pump

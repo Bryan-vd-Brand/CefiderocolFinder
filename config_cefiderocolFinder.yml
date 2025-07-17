@@ -1,0 +1,8 @@
+Acinetobacter_baumannii	'referenceDB/Acinetobacter_baumannii/GCF_009035845.1_ASM903584v1_genomic.fna'
+Escherichia_coli	'referenceDB/Escherichia_coli/GCF_000005845.2_ASM584v2_genomic.fna'
+Klebsiella_pneumoniae	'referenceDB/Klebsiella_pneumoniae/GCF_000240185.1_ASM24018v2_genomic.fna'
+Pseudomonas_aeruginosa	'referenceDB/Pseudomonas_aeruginosa/GCF_000006765.1_ASM676v1_genomic.fna'
+Acinetobacter_baumannii_accession	'NZ_CP045110'
+Escherichia_coli_accession	'NC_000913'
+Klebsiella_pneumoniae_accession	'NC_016845'
+Pseudomonas_aeruginosa_accession	'NC_002516'

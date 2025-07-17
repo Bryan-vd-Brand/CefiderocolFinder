@@ -1,0 +1,8 @@
+threads:
+  generic: 8
+mem_mb:
+  generic: 30000
+runtime_min:
+  generic: 1200
+queue:
+ generic: bio
