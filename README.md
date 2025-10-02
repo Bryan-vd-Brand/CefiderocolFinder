@@ -11,9 +11,9 @@ CefiderocolFinder uses NCBI reference genomes, these have to be added to snpEff.
 Find your snpEff folder of your CefiderocolFinder conda environment (/conda/envs/CefiderocolFinder/share/snpeff*) and run the following commands to download and configure reference genomes:
 * Acinetobacter_baumannii: ./scripts/buildDbNcbi.sh NZ_CP045110
 * Escherichia_coli: ./scripts/biuldDbNcbi.sh NC_000913
-* Klebsiella_pneumoniae: ./scripts/buildDbNcbi.sh NC_016845
+* Klebsiella_pneumoniae: ./scripts/buildDbNcbi.sh NZ_CP117227
 * Pseudomonas_aeruginosa: ./scripts/buildDbNcbi.sh NC_002516
-* The Refseq Identifiers for CRAB, CPEC, CPKP and CPPA were GCF_009035845, GCF_000005845, GCF_000240185 and GCF_000006765 respectively.
+* The Refseq Identifiers for CRAB, CPEC, CPKP and CPPA were GCF_009035845, GCF_000005845, GCF_028596205 and GCF_000006765 respectively.
 * When changing reference genomes aditionally update the chromosome accession in the config_cefiderocolFinder.yml file.
 
 ## <a name="cefiderocolFinder">Running CefiderocolFinder</a>
