@@ -32,7 +32,7 @@ rule CefiderocolFinder_Escherchia_coli:
 		config['threads']['generic']
 	shell:
 		'''
-		python main.py --config config_cefiderocolFinder.yml --keep-temp --output {output.outputDir} --species Escherichia_coli --reads {input.fastq} --name {wildcards.sample}
+		python main.py --config config_cefiderocolFinder.yml --output {output.outputDir} --species Escherichia_coli --reads {input.fastq} --name {wildcards.sample}
 		'''
 rule CefiderocolFinder_Pseudomonas_aeruginosa:
 	input:
@@ -49,7 +49,7 @@ rule CefiderocolFinder_Pseudomonas_aeruginosa:
 		config['threads']['generic']
 	shell:
 		'''
-		python main.py --config config_cefiderocolFinder.yml --keep-temp --output {output.outputDir} --species Pseudomonas_aeruginosa --reads {input.fastq} --name {wildcards.sample}
+		python main.py --config config_cefiderocolFinder.yml --output {output.outputDir} --species Pseudomonas_aeruginosa --reads {input.fastq} --name {wildcards.sample}
 		'''
 
 rule CefiderocolFinder_Klebsiella_pneumoniae:
@@ -67,7 +67,7 @@ rule CefiderocolFinder_Klebsiella_pneumoniae:
 		config['threads']['generic']
 	shell:
 		'''
-		python main.py --config config_cefiderocolFinder.yml --keep-temp --output {output.outputDir} --species Klebsiella_pneumoniae --reads {input.fastq} --name {wildcards.sample}
+		python main.py --config config_cefiderocolFinder.yml --output {output.outputDir} --species Klebsiella_pneumoniae --reads {input.fastq} --name {wildcards.sample}
 		'''
 
 
@@ -86,6 +86,6 @@ rule CefiderocolFinder_Acinetobacter_baumannii:
 		config['threads']['generic']
 	shell:
 		'''
-		python main.py --config config_cefiderocolFinder.yml --keep-temp --output {output.outputDir} --species Acinetobacter_baumannii --reads {input.fastq} --name {wildcards.sample}
+		python main.py --config config_cefiderocolFinder.yml --output {output.outputDir} --species Acinetobacter_baumannii --reads {input.fastq} --name {wildcards.sample}
 		'''
   
