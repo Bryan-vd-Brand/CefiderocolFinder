@@ -1,0 +1,68 @@
+Bootstrap: docker
+From: mambaorg/micromamba:2.5.0
+
+%labels
+    Author Bryan van den Brand
+    Tool CefiderocolFinder
+    Version 1.0.1
+
+%files
+    CefiderocolFinder_conda.yaml /opt/CefiderocolFinder/
+    main.py /opt/CefiderocolFinder/
+    config_cefiderocolFinder.yml /opt/CefiderocolFinder/
+    config_snakemake.yaml /opt/CefiderocolFinder/
+    gatk /opt/CefiderocolFinder/
+    gatk-package-4.6.1.0-local.jar /opt/CefiderocolFinder/
+    species_config_example.yaml /opt/CefiderocolFinder/
+    Snakefile /opt/CefiderocolFinder/
+    run_pipeline.sh /opt/CefiderocolFinder/
+    README.md /opt/CefiderocolFinder/
+    LICENSE /opt/CefiderocolFinder/
+    gatkPythonPackageArchive.zip /opt/CefiderocolFinder/
+
+    referenceDB /opt/CefiderocolFinder/
+    profile /opt/CefiderocolFinder/
+
+%post
+    echo "Setting up CefiderocolFinder..."
+
+    mkdir -p /opt/CefiderocolFinder/
+    mkdir -p /opt/CefiderocolFinder/referenceDB/
+    mkdir -p /opt/CefiderocolFinder/profile/
+    mkdir -p /opt/conda/envs/CefiderocolFinder/share/snpeff-5.2-1/data/
+
+    chmod +x /opt/CefiderocolFinder/gatk
+    chmod +x /opt/CefiderocolFinder/run_pipeline.sh
+
+    #clean incase of rebuild
+    rm -rf /opt/conda/envs/CefiderocolFinder
+
+    # Create conda environment
+    micromamba create -y \
+        -n CefiderocolFinder \
+        -f /opt/CefiderocolFinder/CefiderocolFinder_conda.yaml
+
+    micromamba clean --all --yes
+    #add CefiderocolFinder and fix permissions on reference data
+    echo '#!/usr/bin/env bash' > /usr/local/bin/CefiderocolFinder
+    echo 'exec python /opt/CefiderocolFinder/main.py "$@"' >> /usr/local/bin/CefiderocolFinder
+    chmod +x /usr/local/bin/CefiderocolFinder
+    chmod -R a+rX /opt/CefiderocolFinder/referenceDB
+    chmod -R a+rX /opt/CefiderocolFinder/profile
+    
+    #Add snpeff reference genomes
+    export PATH=/opt/conda/envs/CefiderocolFinder/bin:$PATH
+    cd /opt/conda/envs/CefiderocolFinder/share/snpeff-5.2-1/
+    ./scripts/buildDbNcbi.sh NZ_CP045110
+    ./scripts/buildDbNcbi.sh NC_000913
+    ./scripts/buildDbNcbi.sh NZ_CP117227
+    ./scripts/buildDbNcbi.sh NC_002516
+
+
+%environment
+    export PATH=/opt/conda/envs/CefiderocolFinder/bin:/usr/local/bin:$PATH
+    export CONDA_DEFAULT_ENV=CefiderocolFinder
+
+%runscript
+    cd /opt/CefiderocolFinder
+    exec CefiderocolFinder "$@"

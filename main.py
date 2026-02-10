@@ -32,9 +32,21 @@ def setup_logger(log_file):
 def run_subprocess(command):
     """Helper function to run subprocess commands and handle errors."""
     try:
-        result = subprocess.run(command, shell=True, check=True, capture_output=True, text=True)
+        process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, bufsize=1, text=True)
+        console = []
+
+        for line in process.stdout:
+            print(line)
+            console.append(line)
+
+        process.wait()
+
+        if process.returncode != 0:
+            raise subprocess.CalledProcessError(process.returncode, command, output="".join(console))
+
         logger.info(f"Command succeeded: {command}")
-        return result.stdout
+        return "".join(console)
+    
     except subprocess.CalledProcessError as e:
         logger.error(f"Command failed: {e.cmd}\nError: {e.stderr}")
         sys.exit(1)
@@ -118,8 +130,9 @@ def parse_adaptations(variants_table, adaptations, species, output_dir, name):
     variants_df = pd.read_table(variants_table,sep='\t',header=0)
     foundVariant_df = pd.DataFrame(columns=["Name","Gene","CHROM","POS","ID","REF","ALT","QUAL","FILTER","AC","AF","AN","BaseQRankSum","DP","ExcessHet","FS","InbreedingCoeff","MLEAC","MLEAF","MQ","MQRankSum","QD","ReadPosRankSum","SOR","ANN","LOF","NMD"])
 
-    for gene in adaptations["Gene"]:
-        adaptation = adaptations.loc[adaptations["Gene"] == gene, "Adaptation"].iloc[0]
+    for index, row in adaptations.iterrows():
+        gene = row["Gene"]
+        adaptation = row["Adaptation"]
         gene_df = check_gene(variants_df,gene,adaptation)
         if isNotEmptyDF(gene_df):
             foundVariant_df = AddFilterDataframe(foundVariant_df,gene_df,name,gene)
@@ -135,33 +148,38 @@ def check_adaptations(variants_df,adaptations,species,output_dir, name, minDP):
     foundVariant_df = pd.DataFrame(columns=["Name","Gene","CHROM","POS","ID","REF","ALT","QUAL","FILTER","AC","AF","AN","BaseQRankSum","DP","ExcessHet","FS","InbreedingCoeff","MLEAC","MLEAF","MQ","MQRankSum","QD","ReadPosRankSum","SOR","ANN","LOF","NMD"])
     otherVariant_df = pd.DataFrame(columns=["Name","Gene","CHROM","POS","ID","REF","ALT","QUAL","FILTER","AC","AF","AN","BaseQRankSum","DP","ExcessHet","FS","InbreedingCoeff","MLEAC","MLEAF","MQ","MQRankSum","QD","ReadPosRankSum","SOR","ANN","LOF","NMD"])
     #loop all variants in DB
-    for gene in adaptations["Gene"]:
+    for key, row in adaptations.iterrows():
+        gene = row["Gene"]
+        adaptation = row["Adaptation"]
         #all results of current gene
         gene_df = variants_df[variants_df["Gene"] == gene]
         #filter out results that do not meet minDP
         gene_df = gene_df[gene_df.DP > minDP]
-        #adaptation type of current gene
-        adaptation = adaptations.loc[adaptations["Gene"] == gene, "Adaptation"].iloc[0]
         if isNotEmptyDF(gene_df):
             #frameshift, count ref/alt of all framehifts in gene for reinstating frameshifts
-            difference = 0
+            
             if "frameshift_variant" in adaptation:
+                difference = 0
+
                 for index, row in gene_df.iterrows():
                     len_ref = len(row["REF"])
-                    len_alt = len(row["ALT"])
-                    if row["ALT"] == ".":
-                        len_alt = 0
+                    len_alt = 0 if row["ALT"] == "." else len(row["ALT"])
                     difference += (len_ref - len_alt)
+
                 #frameshift?
                 if difference % 3 != 0:
                     foundVariant_df = pd.concat([foundVariant_df,gene_df],ignore_index=True)
                 else:
                     logger.info(f"Found reinstating frameshifts for {species} {name} {gene}; removed")
 
-
             #missense_variant, pass through
-            if "missense_variant" in adaptation or "conservative_inframe_insertion" in adaptation:
+            elif "missense_variant" in adaptation or "conservative_inframe_insertion" in adaptation:
                 otherVariant_df = pd.concat([otherVariant_df,gene_df],ignore_index=True)
+
+            #what did we find?
+            else:
+                logger.info(f"Adaptation not filtered for {species} {name} {gene}")
+
     foundVariant_df.to_csv(foundVariants_tsv,sep="\t")
     otherVariant_df.to_csv(otherVariant_tsv,sep="\t")
     return foundVariant_df
@@ -199,7 +217,7 @@ def annotate_variants(vcf_file, output_dir, ref_genome, name):
     """Annotate variants using SnpEff."""
     logger.info("Annotating variants with SnpEff")
     annotated_vcf = os.path.join(output_dir, f"{name}_snpEff.vcf")
-    run_subprocess(f"snpEff -ud 100 -noStats {ref_genome} {vcf_file} > {annotated_vcf}")
+    run_subprocess(f"snpEff -ud 15 -noStats {ref_genome} {vcf_file} > {annotated_vcf}")
     return annotated_vcf
 
 def convert_vcf_to_table(vcf_file, output_dir, name):
@@ -240,7 +258,7 @@ def main():
     # Read configuration file
     if not args.config:
         #default config
-        args.config = "config.yml"
+        args.config = "config_cefiderocolFinder.yml"
     config = read_config(args.config)
     logger.info("Configuration loaded successfully.")
 
@@ -268,7 +286,7 @@ def main():
 
     #set fastqc
     if not args.fastqc:
-        args.fastqc = True
+        args.fastqc = False
 
     #set DP
     if not args.minDP:

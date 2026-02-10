@@ -1,3 +1,42 @@
+## <a name="singularity">Singularity Container</a>
+There is a singularity container build recipe (.def) with the below guidance on the conda environment and reference genomes integrated. 
+* Its recommended to bind the folder with read data and your output directory
+* When using singularity exec the working directory must be set to the internal wd in the container
+
+*   singularity exec --cleanenv \
+      --bind /path/to/your/readfolder:/reads \
+      --bind /path/to/your/outputfolder:/CefiderocolFinderOutput \
+      --pwd /opt/CefiderocolFinder \
+      CefiderocolFinder.sif \
+      CefiderocolFinder \
+      --reads /reads/sample_R1.fastq.gz /reads/sample_R2.fastq.gz \
+      --output /CefiderocolFinderOutput \
+      --species Escherichia_coli \
+      --name sample_identifier \
+      --config config_cefiderocolFinder.yml
+
+or alternatively through shell when testing
+
+*   singularity shell --cleanenv \
+      --bind /path/to/your/readfolder:/reads \
+      --bind /path/to/your/outputfolder:/CefiderocolFinderOutput \
+      --pwd /opt/CefiderocolFinder \
+      CefiderocolFinder.sif
+
+or test the container
+
+* singularity run CefiderocolFinder.sif --help
+
+## <a name="singularity build">Building the Singularity Container</a>
+* Clone the git
+* Please download the GATK variant caller: https://github.com/broadinstitute/gatk/releases
+* Place the gatk-package-4.6.1.0-local.jar in the CefiderocolFinder folder.
+* Place the gatkPythonPackageArchive.zip in the folder.
+* Place the GATK wrapper file "gatk" in the folder.
+* Build the singularity container using the following build command;
+* singularity build --fakeroot CefiderocolFinder.sif CefiderocolFinder.def
+
+
 ## <a name="conda">Conda Environment</a>
 CefiderocolFinder relies on a conda environment for analysis:
 * Please download the GATK variant caller: https://github.com/broadinstitute/gatk/releases
@@ -48,3 +87,7 @@ Expected format is the following:
 ## <a name="faq">FAQ</a>
 * Building the environment failed, the gatkPythonPackageArchive.zip was not found:
 * Depending on your conda .bashrc settings your env might be build at a different location, replace the gatkPythonPackageArchive.zip in CefiderocolFinder_conda.yaml with a full path to the file.
+
+
+## <a name="versions">CefiderocolFinder versions</a>
+* V1.0.1: Fixed an issue with multiple adaptations in a single species & gene combination. Added singularity container support. Added stdOUT passthrough for container shell usage. 
